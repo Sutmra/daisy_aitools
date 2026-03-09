@@ -1,0 +1,443 @@
+.odb-root {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px - 48px);
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ===== 工具栏 ===== */
+.odb-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: white;
+    flex-shrink: 0;
+}
+
+.odb-toolbar-left,
+.odb-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.toolbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    color: var(--gray-600);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.toolbar-btn:hover:not(:disabled) {
+    background: var(--gray-50);
+    border-color: var(--gray-300);
+}
+
+.toolbar-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+    margin: 0 4px;
+}
+
+/* ===== 表格区域 ===== */
+.odb-table-wrap {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+}
+
+.odb-table-container {
+    min-width: 100%;
+}
+
+.odb-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+}
+
+/* 列字母行 */
+.col-letter-row th {
+    background: var(--gray-50);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-400);
+    padding: 5px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.row-num-header {
+    width: 48px !important;
+    background: var(--gray-50) !important;
+    border-right: 1px solid var(--border) !important;
+}
+
+.col-letter {
+    min-width: 120px;
+}
+
+.add-col-header {
+    width: 40px;
+}
+
+.add-col-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--gray-300);
+    width: 100%;
+    height: 100%;
+    transition: var(--transition);
+}
+
+.add-col-btn:hover {
+    color: var(--primary);
+}
+
+/* 表头行 */
+.header-row th {
+    background: white;
+    border-right: 1px solid var(--border);
+    border-bottom: 2px solid var(--border);
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-700);
+    padding: 10px 14px;
+    position: sticky;
+    top: 28px;
+    z-index: 9;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 120px;
+}
+
+.header-row th:hover {
+    background: var(--gray-50);
+}
+
+.header-row th.editing {
+    background: #EEF0FF;
+}
+
+/* 数据行 */
+.data-row {
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.data-row:hover {
+    background: #FAFAFA;
+}
+
+.data-row:hover .delete-row-btn {
+    opacity: 1;
+}
+
+.row-num {
+    width: 48px;
+    min-width: 48px;
+    padding: 8px 8px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray-400);
+    background: var(--gray-50);
+    border-right: 1px solid var(--border);
+    position: relative;
+    white-space: nowrap;
+}
+
+.delete-row-btn {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--danger);
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    line-height: 1;
+    padding: 0;
+}
+
+.data-cell {
+    padding: 8px 14px;
+    border-right: 1px solid var(--gray-100);
+    cursor: cell;
+    transition: background 0.1s;
+    min-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    color: var(--gray-700);
+}
+
+.data-cell:hover {
+    background: var(--primary-light);
+}
+
+.data-cell.editing {
+    background: #EEF0FF;
+    padding: 0;
+}
+
+.data-cell.empty {
+    color: var(--gray-200);
+}
+
+.empty-row {
+    border-bottom: 1px solid var(--gray-50);
+}
+
+.empty-row td {
+    padding: 8px 14px;
+}
+
+.empty-row .row-num {
+    background: var(--gray-50);
+    border-right: 1px solid var(--border);
+    color: var(--gray-300);
+}
+
+.empty-row .data-cell {
+    color: transparent;
+}
+
+.cell-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+    background: white;
+    font-size: 13px;
+    padding: 8px 14px;
+    font-family: inherit;
+    color: var(--gray-800);
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.empty-cell-text {
+    color: var(--gray-200);
+}
+
+/* ===== Sheet 标签栏 ===== */
+.odb-sheet-bar {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    border-top: 1px solid var(--border);
+    background: white;
+    height: 38px;
+    flex-shrink: 0;
+    gap: 2px;
+}
+
+.sheet-tab {
+    padding: 5px 16px;
+    border: none;
+    background: none;
+    font-size: 13px;
+    color: var(--gray-500);
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    transition: var(--transition);
+    font-family: inherit;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+}
+
+.sheet-tab:hover {
+    color: var(--gray-700);
+    background: var(--gray-50);
+}
+
+.sheet-tab.active {
+    color: var(--gray-800);
+    border-bottom-color: var(--primary);
+    font-weight: 600;
+}
+
+.sheet-tab-add {
+    width: 26px;
+    height: 26px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: none;
+    cursor: pointer;
+    color: var(--gray-400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: var(--transition);
+    margin-left: 4px;
+}
+
+.sheet-tab-add:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.sheet-bar-right {
+    margin-left: auto;
+}
+
+.last-synced {
+    font-size: 11px;
+    color: var(--gray-300);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* ===== Sheet 标签重命名与交互 ===== */
+.sheet-name-input {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-family: inherit;
+}
+
+/* ===== Context Menu 悬浮右键菜单 ===== */
+.odb-context-menu {
+    position: fixed;
+    z-index: 1000;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    padding: 4px;
+    min-width: 140px;
+    animation: odbContextMenuFadeIn 0.1s ease-out;
+}
+
+@keyframes odbContextMenuFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.odb-context-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    color: var(--danger);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.odb-context-menu-item:hover {
+    background: #FEF2F2;
+}
+
+/* ===== Modals (弹窗) ===== */
+.odb-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(17, 24, 39, 0.4);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.odb-modal {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    width: 320px;
+    box-shadow: var(--shadow-lg);
+    animation: odbModalFadeIn 0.2s ease-out;
+}
+
+@keyframes odbModalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.odb-modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0 0 8px 0;
+}
+
+.odb-modal-desc {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+}
+
+.odb-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
