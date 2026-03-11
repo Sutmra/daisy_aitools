@@ -6,7 +6,10 @@ const KEYS = {
     DATABASE: 'daisy_ai_database',
     CHAT_HISTORY: 'daisy_ai_chats',
     REGISTERED_USERS: 'daisy_ai_registered_users',
+    VERSION: 'daisy_ai_version',
 };
+
+const CURRENT_VERSION = '1.1.0'; // 升级版本号以强制清理历史知识库缓存
 
 export const getAvatarColor = (name = '') => {
     // 专项优化特定名称的视觉专属体验
@@ -56,7 +59,16 @@ export const storage = {
 
     // 知识库
     // 兼容旧逻辑，但大型数据应使用 fetchKnowledge
-    getKnowledge: () => JSON.parse(localStorage.getItem(KEYS.KNOWLEDGE_BASE) || '[]'),
+    getKnowledge: () => {
+        // 版本检查：如果版本不符，清空旧知识库缓存（解决 CIS 培训文档残留问题）
+        const savedVersion = localStorage.getItem(KEYS.VERSION);
+        if (savedVersion !== CURRENT_VERSION) {
+            localStorage.removeItem(KEYS.KNOWLEDGE_BASE);
+            localStorage.setItem(KEYS.VERSION, CURRENT_VERSION);
+            return [];
+        }
+        return JSON.parse(localStorage.getItem(KEYS.KNOWLEDGE_BASE) || '[]');
+    },
     setKnowledge: (list) => localStorage.setItem(KEYS.KNOWLEDGE_BASE, JSON.stringify(list)),
 
     // 后端同步方法
