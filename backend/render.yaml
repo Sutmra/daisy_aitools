@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: daisy-ai-backend
+    env: node
+    plan: free
+    region: singapore
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: GLM_API_KEY
+        sync: false # 需要在 Render 后台手动设置
+      - key: NODE_ENV
+        value: production

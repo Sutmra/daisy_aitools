@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // GLM-4V API 配置
-const GLM_API_KEY = '2dc9da35b534466db39ee3af5dca0723.d9QLaapX7vxhfogv';
+const GLM_API_KEY = process.env.GLM_API_KEY || '2dc9da35b534466db39ee3af5dca0723.d9QLaapX7vxhfogv';
 const GLM_BASE_URL = 'https://open.bigmodel.cn/api/paas/v4';
 
 app.use(cors({

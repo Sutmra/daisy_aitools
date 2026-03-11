@@ -2,5 +2,10 @@ node_modules/
 dist/
 .DS_Store
 .env
+.env.local
+.env.*.local
+frontend/.env.production
 backend/uploads/
-backend/server_debug.log
+backend/data/*.json
+!backend/data/default_kb.json
+backend/*.log
