@@ -50,11 +50,19 @@ export default function ChatPage() {
         ];
     });
 
-    // 当前各 Tab 激活的对话 ID（独立记忆）
-    const [activeConvIdByTab, setActiveConvIdByTab] = useState(() => ({
-        chatbot: 1,
-        report: 4,
-    }));
+    // 当前各 Tab 激活的对话 ID（初始化为各分类下最新的一条）
+    const [activeConvIdByTab, setActiveConvIdByTab] = useState(() => {
+        const getLatestId = (tab) => {
+            const tabConvs = conversations
+                .filter(c => c.tab === tab)
+                .sort((a, b) => b.timestamp - a.timestamp);
+            return tabConvs[0]?.id || (tab === 'chatbot' ? 1 : 4);
+        };
+        return {
+            chatbot: getLatestId('chatbot'),
+            report: getLatestId('report'),
+        };
+    });
 
     // 当前 Tab 对应的所有历史（按最后更新时间倒序排序）
     const filteredConvs = conversations
