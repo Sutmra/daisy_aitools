@@ -493,11 +493,10 @@ export async function searchKnowledge(query, topK = 3, existingDocs = null) {
 
     // ---- Step 3: 返回结果 ----
     let matched = scored
-        .filter(d => d.score >= 0.5) // 最低命中阈值，由于 TF-IDF 及长度惩罚极大压缩了水词膨胀分数，故基准下调至 0.5
+        .filter(d => d.score >= 0.5) // 最低命中阈值
         .sort((a, b) => b.score - a.score)
         .slice(0, topK);
 
-    // ---- 【核心防御阵线 3】：相对断崖式截断 ----
     // 只保留得分超过头号种子选手 45% 分数的文档，斩断长尾无关文档
     if (matched.length > 0) {
         const topScore = matched[0].score;
@@ -505,11 +504,7 @@ export async function searchKnowledge(query, topK = 3, existingDocs = null) {
         return matched;
     }
 
-    // 降级：全部文档作通用参考
-    return scored
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .slice(0, topK)
-        .map(d => ({ ...d, isGeneralRef: true }));
+    return [];
 }
 
 function escapeRegex(str) {

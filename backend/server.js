@@ -31,26 +31,10 @@ const KB_FILE = path.join(dataDir, 'kb.json');
 // 助手函数：读取/保存知识库
 const readKB = () => {
   try {
-    const defaultKbFile = path.join(dataDir, 'default_kb.json');
-
     if (!fs.existsSync(KB_FILE)) {
-      if (fs.existsSync(defaultKbFile)) {
-        const defaultData = JSON.parse(fs.readFileSync(defaultKbFile, 'utf8'));
-        fs.writeFileSync(KB_FILE, JSON.stringify(defaultData, null, 2), 'utf8');
-        return defaultData;
-      }
       return { docs: [] };
     }
-
     const data = JSON.parse(fs.readFileSync(KB_FILE, 'utf8'));
-    // If docs is empty, try to seed with default
-    if (!data.docs || data.docs.length === 0) {
-      if (fs.existsSync(defaultKbFile)) {
-        const defaultData = JSON.parse(fs.readFileSync(defaultKbFile, 'utf8'));
-        fs.writeFileSync(KB_FILE, JSON.stringify(defaultData, null, 2), 'utf8');
-        return defaultData;
-      }
-    }
     return data;
   } catch (e) {
     console.error('Read KB Error:', e);
