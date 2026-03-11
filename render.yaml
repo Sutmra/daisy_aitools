@@ -4,6 +4,7 @@ services:
     env: node
     plan: free
     region: singapore
+    rootDir: backend
     buildCommand: npm install
     startCommand: node server.js
     envVars:
