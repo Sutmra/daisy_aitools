@@ -106,7 +106,10 @@ export const storage = {
         const dbStr = localStorage.getItem(KEYS.DATABASE);
         let db = dbStr ? JSON.parse(dbStr) : null;
         // 如果是从旧版本升级（或遭遇受损存储），强制覆盖成全新长数据
-        if (!db || !db.sheets || !db.sheets['售电数据'] || db.sheets['售电数据'].rows.length < 430) {
+        const todayStr = new Date().toISOString().split('T')[0];
+        const lastRowDate = db?.sheets?.['售电数据']?.rows?.[db.sheets['售电数据'].rows.length - 1]?.[0];
+
+        if (!db || !db.sheets || !db.sheets['售电数据'] || db.sheets['售电数据'].rows.length < 430 || lastRowDate !== todayStr) {
             db = defaultDatabase();
             localStorage.setItem(KEYS.DATABASE, JSON.stringify(db));
         }
@@ -173,7 +176,7 @@ function defaultDatabase() {
 function generateSalesData() {
     const rows = [];
     const startDate = new Date('2025-01-01');
-    const endDate = new Date('2026-03-09');
+    const endDate = new Date();
 
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
         const dateStr = d.toISOString().split('T')[0];
